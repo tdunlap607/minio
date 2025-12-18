@@ -1,0 +1,15 @@
+FROM minio/minio:latest
+
+# Copy the locally built minio binary
+COPY ./minio /usr/bin/minio
+
+# Ensure the binary is executable
+RUN chmod +x /usr/bin/minio
+
+COPY dockerscripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+
+VOLUME ["/data"]
+
+CMD ["minio"]
