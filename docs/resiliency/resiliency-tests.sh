@@ -397,19 +397,25 @@ function main() {
 		OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 		ARCH=$(uname -m)
 		case "$OS" in
-			darwin) OS="darwin" ;;
-			linux) OS="linux" ;;
-			*) echo "Unsupported OS: $OS"; exit 1 ;;
+		darwin) OS="darwin" ;;
+		linux) OS="linux" ;;
+		*)
+			echo "Unsupported OS: $OS"
+			exit 1
+			;;
 		esac
 		case "$ARCH" in
-			x86_64|amd64) ARCH="amd64" ;;
-			arm64|aarch64) ARCH="arm64" ;;
-			*) echo "Unsupported architecture: $ARCH"; exit 1 ;;
+		x86_64 | amd64) ARCH="amd64" ;;
+		arm64 | aarch64) ARCH="arm64" ;;
+		*)
+			echo "Unsupported architecture: $ARCH"
+			exit 1
+			;;
 		esac
 		MC_URL="https://dl.minio.io/client/mc/release/${OS}-${ARCH}/mc"
-		if command -v wget &> /dev/null; then
+		if command -v wget &>/dev/null; then
 			wget -q "$MC_URL" && chmod +x ./mc
-		elif command -v curl &> /dev/null; then
+		elif command -v curl &>/dev/null; then
 			curl -sSL "$MC_URL" -o ./mc && chmod +x ./mc
 		else
 			echo "Neither wget nor curl found. Please install one of them."
