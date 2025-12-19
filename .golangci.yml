@@ -45,10 +45,9 @@ linters:
         text: should have a package comment
       - path: (.+)\.go$
         text: error strings should not be capitalized or end with punctuation or a newline
-      - path: (.+)\.go$
-        text: 'var-naming: avoid package names that conflict with Go standard library package names'
-      - path: var-naming
-        disabled: true
+      - linters:
+          - revive
+        text: 'var-naming:'
     paths:
       - third_party$
       - builtin$
